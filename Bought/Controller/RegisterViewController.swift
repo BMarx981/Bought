@@ -18,8 +18,7 @@ class RegisterViewController: UIViewController {
     @IBAction func registerButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: "goToList", sender: self)
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

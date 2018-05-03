@@ -1,16 +1,16 @@
 //
-//  ListTableViewController.swift
+//  TripTableViewController.swift
 //  Bought
 //
-//  Created by Marx, Brian on 2/7/18.
+//  Created by Marx, Brian on 5/3/18.
 //  Copyright © 2018 Marx, Brian. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class ListTableViewController: UITableViewController {
-
+class TripTableViewController: UITableViewController {
+    
     var trip = TripModel()
     var sectionNames = [String]()
     var fruit = ["grapes", "bananas"]
@@ -27,74 +27,77 @@ class ListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
         for key in ailses.keys {
             sectionNames.append(key)
         }
         for item in sectionNames {
-            let listOfItems = convertToItems(ailses[item]!)
+            let listOfItems = trip.convertToItems(ailses[item]!)
             trip.ailse = [item: listOfItems]
         }
         trip.name = "Trader Joes"
-//        navigationController?.navigationItem.backBarButtonItem?.title = "Login"
-//        navigationItem.backBarButtonItem?.title = "Login"
+        //        navigationController?.navigationItem.backBarButtonItem?.title = "Login"
+        //        navigationItem.backBarButtonItem?.title = "Login"
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func convertToItems(_ items: [String]) -> [Item] {
-        var list = [Item]()
-        for string in items {
-            let itemObj = Item()
-            itemObj.name = string
-            list.append(itemObj)
-        }
-        return list
-    }
-
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sectionNames.count
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionNames.count
+        if let titleOfSection = trip.ailse[sectionNames[section]] {
+            return titleOfSection.count
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionNames[section]
     }
-
+    
     //MARK: - Delegate Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-
+        
         var items = trip.ailse[sectionNames[indexPath.row]]
         //print("Set this to \(items![indexPath.row].name)")
         cell.textLabel?.text = sectionNames[indexPath.row]
-
+        
         return cell
     }
     
     //MARK: - DataSource Methods
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var list = sectionNames[indexPath.row]
         
     }
+
+    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
+        return cell
+    }
+    */
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

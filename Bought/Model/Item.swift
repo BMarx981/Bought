@@ -13,4 +13,5 @@ class Item {
     var price = 0.0
     var store = ""
     var quantity = 0
+    var bought = false
 }

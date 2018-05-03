@@ -117,10 +117,10 @@
             </objects>
             <point key="canvasLocation" x="1156" y="636.4317841079461"/>
         </scene>
-        <!--Lists-->
+        <!--Trip Controller-->
         <scene sceneID="2mw-XU-Ldp">
             <objects>
-                <tableViewController id="UhZ-2h-90S" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Trip" title="Trip Controller" id="UhZ-2h-90S" customClass="TripTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8dB-xt-erL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,6 +229,10 @@
                             <outlet property="userNameTextField" destination="La9-GM-mRK" id="sp8-Xp-HFk"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="passwordTextField" destination="9CP-Au-H8D" id="CpY-7x-DzK"/>
+                        <outlet property="userNameTextField" destination="La9-GM-mRK" id="tZv-J2-D7M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bsO-K9-FFY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

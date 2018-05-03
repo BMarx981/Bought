@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol EditItemDelegate {
     func didEditItem(_ controller: EditItemViewController, item: Item)
