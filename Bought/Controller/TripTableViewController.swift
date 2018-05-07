@@ -20,26 +20,19 @@ class TripTableViewController: UITableViewController {
     var frozen = ["shrimp", "burritos", "pizza"]
     var ailses = [String:[String]]()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.title = "Login"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
         for key in ailses.keys {
             sectionNames.append(key)
         }
-        for item in sectionNames {
-            let listOfItems = trip.convertToItems(ailses[item]!)
-            trip.ailse = [item: listOfItems]
-        }
-        trip.name = "Trader Joes"
-        //        navigationController?.navigationItem.backBarButtonItem?.title = "Login"
-        //        navigationItem.backBarButtonItem?.title = "Login"
         
+        for item in ailses {
+            trip.ailse[item.key] = trip.convertToItems(item.value)
+        }
+
+        trip.name = "Stop and Shop"
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -55,7 +48,7 @@ class TripTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionNames.count
+        return trip.ailse.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,25 +59,22 @@ class TripTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionNames[section]
+        let list = Array(trip.ailse.keys)
+        return list[section]
     }
     
     //MARK: - Delegate Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
+        let nameOfList = trip.ailse[sectionNames[indexPath.section]]
         
-        var items = trip.ailse[sectionNames[indexPath.row]]
-        //print("Set this to \(items![indexPath.row].name)")
-        cell.textLabel?.text = sectionNames[indexPath.row]
+        cell.textLabel?.text = nameOfList![indexPath.row].name
         
         return cell
     }
     
-    //MARK: - DataSource Methods
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var list = sectionNames[indexPath.row]
         
     }
 

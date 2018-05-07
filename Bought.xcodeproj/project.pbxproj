@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41D8A2FF966A308E5613E812 /* Pods_Bought.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B2CA824DB150F628ACA92AC /* Pods_Bought.framework */; };
 		D34302AF209BA249006D48FC /* TripTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34302AE209BA249006D48FC /* TripTableViewController.swift */; };
+		D34302B2209DCD2B006D48FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34302B1209DCD2B006D48FC /* User.swift */; };
 		D3ADEBCB2048BA7A000EF54B /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ADEBCA2048BA7A000EF54B /* EditItemViewController.swift */; };
 		D3DAF973202A6343009DA521 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DAF972202A6343009DA521 /* AppDelegate.swift */; };
 		D3DAF978202A6343009DA521 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF976202A6343009DA521 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 		B095EDDDD7CF2F156CE1F0DB /* Pods-Bought.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bought.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bought/Pods-Bought.debug.xcconfig"; sourceTree = "<group>"; };
 		BB0A1B50AD21636010C171B9 /* Pods-Bought.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bought.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bought/Pods-Bought.release.xcconfig"; sourceTree = "<group>"; };
 		D34302AE209BA249006D48FC /* TripTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewController.swift; sourceTree = "<group>"; };
+		D34302B1209DCD2B006D48FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D3ADEBCA2048BA7A000EF54B /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		D3DAF96F202A6343009DA521 /* Bought.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bought.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DAF972202A6343009DA521 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				D3EE9D73202B793700F8ED6C /* TripModel.swift */,
+				D34302B1209DCD2B006D48FC /* User.swift */,
 				D3EE9D75202B79FF00F8ED6C /* Item.swift */,
 			);
 			path = Model;
@@ -276,6 +279,7 @@
 				D3EE9D6D202A650500F8ED6C /* WelcomeViewController.swift in Sources */,
 				D3EE9D76202B79FF00F8ED6C /* Item.swift in Sources */,
 				D3DAF973202A6343009DA521 /* AppDelegate.swift in Sources */,
+				D34302B2209DCD2B006D48FC /* User.swift in Sources */,
 				D3EE9D78202B84C200F8ED6C /* ListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

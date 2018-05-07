@@ -67,7 +67,7 @@
         <!--Login View Controller-->
         <scene sceneID="jzh-Fh-Bv2">
             <objects>
-                <viewController storyboardIdentifier="Login" id="YRK-iG-Lmb" userLabel="Login View Controller" customClass="LoginViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YRK-iG-Lmb" userLabel="Login View Controller" customClass="LoginViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xD5-qH-4y3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,7 +95,8 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="UhZ-2h-90S" kind="show" identifier="goToLists" id="aNj-mJ-8fx"/>
+                                            <action selector="loginButtonPressed:" destination="YRK-iG-Lmb" eventType="touchUpInside" id="O8I-Jz-hZG"/>
+                                            <segue destination="UhZ-2h-90S" kind="show" identifier="goToTrips" id="ar1-Te-BlW"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -120,7 +121,7 @@
         <!--Trip Controller-->
         <scene sceneID="2mw-XU-Ldp">
             <objects>
-                <tableViewController storyboardIdentifier="Trip" title="Trip Controller" id="UhZ-2h-90S" customClass="TripTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="Trips" title="Trip Controller" id="UhZ-2h-90S" customClass="TripTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8dB-xt-erL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,7 +144,9 @@
                             <outlet property="delegate" destination="UhZ-2h-90S" id="kSs-ep-MUe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lists" id="ANu-dE-2q9"/>
+                    <navigationItem key="navigationItem" title="Trips" id="ANu-dE-2q9">
+                        <barButtonItem key="backBarButtonItem" title="Trips" id="h4y-uz-OPf"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lZC-Zk-MoV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -258,6 +261,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aNj-mJ-8fx"/>
+        <segue reference="ar1-Te-BlW"/>
     </inferredMetricsTieBreakers>
 </document>

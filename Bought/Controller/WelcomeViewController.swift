@@ -11,6 +11,4 @@ import Firebase
 
 class WelcomeViewController {
     
-    
-    
 }

@@ -17,7 +17,6 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
-        performSegue(withIdentifier: "goToList", sender: self)
     }
     
     override func viewDidLoad() {
