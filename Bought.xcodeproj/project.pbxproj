@@ -10,6 +10,7 @@
 		41D8A2FF966A308E5613E812 /* Pods_Bought.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B2CA824DB150F628ACA92AC /* Pods_Bought.framework */; };
 		D34302AF209BA249006D48FC /* TripTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34302AE209BA249006D48FC /* TripTableViewController.swift */; };
 		D34302B2209DCD2B006D48FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34302B1209DCD2B006D48FC /* User.swift */; };
+		D34302B620A0EAF7006D48FC /* Ailse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34302B520A0EAF7006D48FC /* Ailse.swift */; };
 		D3ADEBCB2048BA7A000EF54B /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ADEBCA2048BA7A000EF54B /* EditItemViewController.swift */; };
 		D3DAF973202A6343009DA521 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DAF972202A6343009DA521 /* AppDelegate.swift */; };
 		D3DAF978202A6343009DA521 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF976202A6343009DA521 /* Main.storyboard */; };
@@ -30,13 +31,14 @@
 		BB0A1B50AD21636010C171B9 /* Pods-Bought.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bought.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bought/Pods-Bought.release.xcconfig"; sourceTree = "<group>"; };
 		D34302AE209BA249006D48FC /* TripTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewController.swift; sourceTree = "<group>"; };
 		D34302B1209DCD2B006D48FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D34302B520A0EAF7006D48FC /* Ailse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ailse.swift; sourceTree = "<group>"; };
 		D3ADEBCA2048BA7A000EF54B /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		D3DAF96F202A6343009DA521 /* Bought.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bought.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DAF972202A6343009DA521 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3DAF977202A6343009DA521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D3DAF979202A6343009DA521 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3DAF97C202A6343009DA521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D3DAF97E202A6343009DA521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bought/Info.plist; sourceTree = SOURCE_ROOT; };
+		D3DAF97E202A6343009DA521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bought/Utils/Info.plist; sourceTree = SOURCE_ROOT; };
 		D3DAF984202A63D6009DA521 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3EE9D6C202A650500F8ED6C /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D3EE9D6F202B2D4E00F8ED6C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +81,6 @@
 		D3DAF971202A6343009DA521 /* Bought */ = {
 			isa = PBXGroup;
 			children = (
-				D3DAF97E202A6343009DA521 /* Info.plist */,
 				D3DAF988202A640A009DA521 /* Utils */,
 				D3DAF987202A63F6009DA521 /* Model */,
 				D3DAF986202A63EC009DA521 /* Controller */,
@@ -118,6 +119,7 @@
 				D3EE9D73202B793700F8ED6C /* TripModel.swift */,
 				D34302B1209DCD2B006D48FC /* User.swift */,
 				D3EE9D75202B79FF00F8ED6C /* Item.swift */,
+				D34302B520A0EAF7006D48FC /* Ailse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -125,6 +127,7 @@
 		D3DAF988202A640A009DA521 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D3DAF97E202A6343009DA521 /* Info.plist */,
 				D3DAF984202A63D6009DA521 /* GoogleService-Info.plist */,
 			);
 			path = Utils;
@@ -277,6 +280,7 @@
 				D3EE9D74202B793700F8ED6C /* TripModel.swift in Sources */,
 				D3ADEBCB2048BA7A000EF54B /* EditItemViewController.swift in Sources */,
 				D3EE9D6D202A650500F8ED6C /* WelcomeViewController.swift in Sources */,
+				D34302B620A0EAF7006D48FC /* Ailse.swift in Sources */,
 				D3EE9D76202B79FF00F8ED6C /* Item.swift in Sources */,
 				D3DAF973202A6343009DA521 /* AppDelegate.swift in Sources */,
 				D34302B2209DCD2B006D48FC /* User.swift in Sources */,
@@ -420,7 +424,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6W3F7S8Q67;
-				INFOPLIST_FILE = Bought/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Bought/Utils/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bmarx.Bought;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -436,7 +440,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6W3F7S8Q67;
-				INFOPLIST_FILE = Bought/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Bought/Utils/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bmarx.Bought;
 				PRODUCT_NAME = "$(TARGET_NAME)";

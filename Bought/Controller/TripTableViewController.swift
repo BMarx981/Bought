@@ -18,6 +18,7 @@ class TripTableViewController: UITableViewController {
     var carbs = ["bread", "cereal", "muffins"]
     var dairy = ["milk", "orange juice", "eggs", "butter"]
     var frozen = ["shrimp", "burritos", "pizza"]
+    var isItemExpanded: Bool? = true
     var ailses = [String:[String]]()
     
     override func viewDidLoad() {
@@ -45,6 +46,30 @@ class TripTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func handleExpandClose(button: UIButton) {
+        
+        let section = button.tag
+        var indexPaths = [IndexPath]()
+        let sectionName = Array(trip.ailse.keys)
+        
+        for row in (trip.ailse[sectionName[section]]?.indices)! {
+            let indexPath = IndexPath(row: row, section: section)
+            indexPaths.append(indexPath)
+        }
+        
+        isItemExpanded = (trip.ailse[sectionName[section]]?[0].isExpanded)!
+        
+        button.setTitle(isItemExpanded! ? "Expand" : "Close", for: .normal)
+
+        if isItemExpanded! {
+            tableView.deleteRows(at: indexPaths, with: .fade)
+            trip.ailse[sectionName[section]]?[0].isExpanded = !(trip.ailse[sectionName[section]]?[0].isExpanded)!
+        } else {
+            tableView.insertRows(at: indexPaths, with: .fade)
+            trip.ailse[sectionName[section]]?[0].isExpanded = !(trip.ailse[sectionName[section]]?[0].isExpanded)!
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,10 +77,11 @@ class TripTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let titleOfSection = trip.ailse[sectionNames[section]] {
-            return titleOfSection.count
+        let nameList = Array(trip.ailse.keys)
+        if !trip.ailse[nameList[section]]![0].isExpanded {
+            return 0
         }
-        return 0
+        return nameList.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -63,13 +89,26 @@ class TripTableViewController: UITableViewController {
         return list[section]
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let button = UIButton()
+        button.setTitle("Close", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .purple
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        
+        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+        button.tag = section
+        
+        return button
+    }
+    
     //MARK: - Delegate Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-        let nameOfList = trip.ailse[sectionNames[indexPath.section]]
-        
-        cell.textLabel?.text = nameOfList![indexPath.row].name
+        let nameOfList = Array(trip.ailse.keys)
+        let items = trip.ailse[nameOfList[indexPath.section]]
+        cell.textLabel?.text = items![indexPath.row].name
         
         return cell
     }
