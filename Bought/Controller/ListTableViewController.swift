@@ -28,15 +28,15 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
-        for key in ailses.keys {
-            sectionNames.append(key)
-        }
-        for item in sectionNames {
-            let listOfItems = convertToItems(ailses[item]!)
-            trip.ailse = [item: listOfItems]
-        }
-        trip.name = "Trader Joes"
+//        ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
+//        for key in ailses.keys {
+//            sectionNames.append(key)
+//        }
+//        for item in sectionNames {
+//            let listOfItems = convertToItems(ailses[item]!)
+//            trip.ailse = [item: listOfItems]
+//        }
+//        trip.name = "Trader Joes"
 //        navigationController?.navigationItem.backBarButtonItem?.title = "Login"
 //        navigationItem.backBarButtonItem?.title = "Login"
         
@@ -82,7 +82,7 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
 
-        var items = trip.ailse[sectionNames[indexPath.row]]
+        //var items = trip.ailse[sectionNames[indexPath.row]]
         //print("Set this to \(items![indexPath.row].name)")
         cell.textLabel?.text = sectionNames[indexPath.row]
 

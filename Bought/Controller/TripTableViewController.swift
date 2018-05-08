@@ -18,18 +18,18 @@ class TripTableViewController: UITableViewController {
     var carbs = ["bread", "cereal", "muffins"]
     var dairy = ["milk", "orange juice", "eggs", "butter"]
     var frozen = ["shrimp", "burritos", "pizza"]
-    var isItemExpanded: Bool? = true
-    var ailses = [String:[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
+        let ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
         for key in ailses.keys {
             sectionNames.append(key)
         }
         
-        for item in ailses {
-            trip.ailse[item.key] = trip.convertToItems(item.value)
+        for ailseObj in 0..<ailses.count {
+            let ailse = Ailse(name: sectionNames[ailseObj], list: trip.convertToItems(ailses[sectionNames[ailseObj]]!), expand: true)
+            trip.ailses.append(ailse)
+            trip.ailse[ailse] = trip.convertToItems(ailses[sectionNames[ailseObj]]!)
         }
 
         trip.name = "Stop and Shop"
@@ -50,49 +50,47 @@ class TripTableViewController: UITableViewController {
         
         let section = button.tag
         var indexPaths = [IndexPath]()
-        let sectionName = Array(trip.ailse.keys)
+        let ailseName = trip.ailses[section].name
         
-        for row in (trip.ailse[sectionName[section]]?.indices)! {
+        for row in trip.ailses[section].items.indices {
             let indexPath = IndexPath(row: row, section: section)
             indexPaths.append(indexPath)
         }
         
-        isItemExpanded = (trip.ailse[sectionName[section]]?[0].isExpanded)!
+        let isItemExpanded = trip.ailses[section].isExpanded
+        trip.ailses[section].isExpanded = !isItemExpanded
         
-        button.setTitle(isItemExpanded! ? "Expand" : "Close", for: .normal)
+        button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
 
-        if isItemExpanded! {
-            tableView.deleteRows(at: indexPaths, with: .fade)
-            trip.ailse[sectionName[section]]?[0].isExpanded = !(trip.ailse[sectionName[section]]?[0].isExpanded)!
+        if isItemExpanded {
+            tableView.deleteRows(at: indexPaths, with: .top)
         } else {
-            tableView.insertRows(at: indexPaths, with: .fade)
-            trip.ailse[sectionName[section]]?[0].isExpanded = !(trip.ailse[sectionName[section]]?[0].isExpanded)!
+            tableView.insertRows(at: indexPaths, with: .top)
         }
+        
     }
     
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return trip.ailse.count
+        return trip.ailses.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let nameList = Array(trip.ailse.keys)
-        if !trip.ailse[nameList[section]]![0].isExpanded {
+        if !trip.ailses[section].isExpanded {
             return 0
         }
-        return nameList.count
+        return trip.ailses[section].items.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let list = Array(trip.ailse.keys)
-        return list[section]
+        return trip.ailses[section].name
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
-        button.setTitle("Close", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Close \(trip.ailses[section].name)", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .purple
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         
@@ -106,9 +104,8 @@ class TripTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-        let nameOfList = Array(trip.ailse.keys)
-        let items = trip.ailse[nameOfList[indexPath.section]]
-        cell.textLabel?.text = items![indexPath.row].name
+        let item = trip.ailses[indexPath.section].items[indexPath.row]
+        cell.textLabel?.text = item.name
         
         return cell
     }
