@@ -46,17 +46,6 @@ class ListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
-    func convertToItems(_ items: [String]) -> [Item] {
-        var list = [Item]()
-        for string in items {
-            let itemObj = Item()
-            itemObj.name = string
-            list.append(itemObj)
-        }
-        return list
-    }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

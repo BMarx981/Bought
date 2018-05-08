@@ -118,6 +118,39 @@
             </objects>
             <point key="canvasLocation" x="1156" y="636.4317841079461"/>
         </scene>
+        <!--Ailses-->
+        <scene sceneID="Iad-TS-Roe">
+            <objects>
+                <tableViewController id="KtP-Um-VDH" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="saR-bA-wnU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2pG-Jd-NwR">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2pG-Jd-NwR" id="WAt-5E-OBS">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KtP-Um-VDH" id="RKQ-Nx-nuZ"/>
+                            <outlet property="delegate" destination="KtP-Um-VDH" id="aRA-ob-796"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Ailses" id="OLi-fF-AZk" userLabel="Ailses">
+                        <barButtonItem key="backBarButtonItem" title="Ailses" id="afj-Ct-NZT"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pxH-af-SOW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2834" y="198"/>
+        </scene>
         <!--Trip Controller-->
         <scene sceneID="2mw-XU-Ldp">
             <objects>
@@ -135,7 +168,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="4si-cD-IN5" kind="show" identifier="goToEditList" id="vN3-HE-9Yx"/>
+                                    <segue destination="KtP-Um-VDH" kind="show" identifier="goToLists" id="0ep-WU-uhK"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -161,7 +194,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Edit Item here:" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fIW-tj-WFg">
-                                <rect key="frame" x="16" y="80" width="343" height="30"/>
+                                <rect key="frame" x="16" y="36" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="name"/>
@@ -181,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSq-KC-YYc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2882" y="198"/>
+            <point key="canvasLocation" x="3622" y="198"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="hxe-dH-0Ed">
@@ -261,6 +294,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ar1-Te-BlW"/>
+        <segue reference="uCh-0d-5Ff"/>
     </inferredMetricsTieBreakers>
 </document>
