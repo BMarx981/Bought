@@ -10,7 +10,7 @@ import Foundation
 
 class User {
     var name = ""
-    var id = 0
+    var uid = 0
     var password = ""
     
 }

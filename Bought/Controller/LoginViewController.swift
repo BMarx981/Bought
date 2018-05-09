@@ -12,8 +12,9 @@ import Firebase
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var userName: UITextField!
-    
     @IBOutlet weak var password: UITextField!
+    
+    let usersref = Database.database().reference(withPath: "online")
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
