@@ -103,21 +103,46 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Trips" largeTitleDisplayMode="always" id="ANu-dE-2q9">
-                        <barButtonItem key="backBarButtonItem" title="Trips" id="h4y-uz-OPf"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="xpC-j1-N3c">
+                            <connections>
+                                <action selector="addButtonTapped:" destination="UhZ-2h-90S" id="b8W-zw-x6c"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lZC-Zk-MoV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2398" y="197"/>
         </scene>
-        <!--List of Items-->
+        <!--Ailses-->
         <scene sceneID="VMm-u3-F6w">
             <objects>
-                <tableViewController storyboardIdentifier="ListsVC" id="2cN-XJ-yfP" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ListsVC" id="2cN-XJ-yfP" userLabel="Ailses" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MpV-Wh-JVN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <toolbar key="tableFooterView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="wog-OW-8TA">
+                            <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <items>
+                                <barButtonItem title="Add Ailse" id="6Gw-QV-kD2">
+                                    <connections>
+                                        <action selector="addAilseTapped:" destination="2cN-XJ-yfP" id="PBu-Y8-I8u"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem title="Add Item" id="2rb-qg-yq5">
+                                    <connections>
+                                        <action selector="addItemTapped:" destination="2cN-XJ-yfP" id="RQH-Qq-mkH"/>
+                                    </connections>
+                                </barButtonItem>
+                                <barButtonItem title="Clear All" id="Hew-jZ-K8P">
+                                    <connections>
+                                        <action selector="clearAllTapped:" destination="2cN-XJ-yfP" id="OhM-4R-7ls"/>
+                                    </connections>
+                                </barButtonItem>
+                            </items>
+                        </toolbar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" id="zSy-vP-2pJ">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -133,9 +158,7 @@
                             <outlet property="delegate" destination="2cN-XJ-yfP" id="g9s-PQ-CSj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="List of Items" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="ZkA-k4-YKu">
-                        <barButtonItem key="backBarButtonItem" title="List" id="m7H-3Z-API"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Title" id="ITV-jP-JDU"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fs-Kw-vAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

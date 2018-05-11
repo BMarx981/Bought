@@ -20,7 +20,9 @@ class ListTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+//        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil)
+
+//        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(addTapped))
         navigationItem.title = trip.name
     }
     
@@ -51,6 +53,34 @@ class ListTableViewController: UITableViewController {
             tableView.insertRows(at: indexPaths, with: .top)
         }
     }
+
+    //Mark : - Bar button Items
+    @IBAction func addAilseTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Add Ailse", message: "Enter the name of the new ailse", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Add Ailse", style: .default) { _ in
+            guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+            let newAilse = Ailse()
+            newAilse.name = text
+            self.trip.ailses.append(newAilse)
+            
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addTextField()
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func addItemTapped(_ sender: UIBarButtonItem) {
+        
+    }
+    
+    @IBAction func clearAllTapped(_ sender: UIBarButtonItem) {
+        print("Clear All")
+    }
+    
     
     // MARK: - Table view data source
     
@@ -71,7 +101,11 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
-        button.setTitle("Close \(trip.ailses[section].name)", for: .normal)
+        if trip.ailses[section].items.count == 0 {
+            button.setTitle("\(trip.ailses[section].name)", for: .normal)
+        } else {
+            button.setTitle("Close \(trip.ailses[section].name)", for: .normal)
+        }
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .purple
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -114,37 +148,24 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
             trip.ailses[indexPath.section].items.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
-    /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
      
      }
-     */
-    
-    /*
+
      // Override to support conditional rearranging of the table view.
      override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
      // Return false if you do not want the item to be re-orderable.
-     return true
+         return true
      }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     func toggleBought(_ cell: UITableViewCell, isBought: Bool) {
         if !isBought {
@@ -179,10 +200,10 @@ class ListTableViewController: UITableViewController {
     }
 }
 
+//Mark: - EditItem Delegate
 extension ListTableViewController: EditItemDelegate {
     func didEditItem(_ controller: EditItemViewController, item: Item, at: IndexPath) {
         trip.ailses[at.section].items[at.row].name = item.name
         trip.ailses[at.section].items[at.row].price = item.price
     }
 }
-

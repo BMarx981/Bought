@@ -43,12 +43,35 @@ class TripTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        let indexPath = IndexPath(row: trips.count, section: 0)
+        
+        let alert = UIAlertController(title: "Add a trip", message: "Enter the name of the store:", preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "New Trip", style: .default) { _ in
+            guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+            let newTrip = TripModel()
+            newTrip.name = text
+            self.trips.append(newTrip)
+            
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: [indexPath], with: .fade)
+            self.tableView.endUpdates()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addTextField()
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -80,9 +103,10 @@ class TripTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            trips.remove(at: indexPath.row)
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            tableView.endUpdates()
         }
     }
 

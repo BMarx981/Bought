@@ -13,6 +13,8 @@ class Ailse {
     var isExpanded = false
     var items = [Item]()
     
+    init(){}
+    
     init(name: String, list: [Item], expand: Bool) {
         self.name = name
         isExpanded = expand
