@@ -12,6 +12,8 @@ import Firebase
 class TripTableViewController: UITableViewController {
     
     var trip = TripModel()
+    var trip2 = TripModel()
+    var trips = [TripModel]()
     var sectionNames = [String]()
     var fruit = ["grapes", "bananas"]
     var veg = ["brocolli", "carrots", "asparagus"]
@@ -29,16 +31,19 @@ class TripTableViewController: UITableViewController {
         for ailseObj in 0..<ailses.count {
             let ailse = Ailse(name: sectionNames[ailseObj], list: trip.convertToItems(ailses[sectionNames[ailseObj]]!), expand: true)
             trip.ailses.append(ailse)
-            trip.ailse[ailse] = trip.convertToItems(ailses[sectionNames[ailseObj]]!)
+            trip2.ailses.append(ailse)
         }
 
         trip.name = "Stop and Shop"
+        trip2.name = "Trader Joes"
 
+        trips.append(trip)
+        trips.append(trip2)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,103 +51,40 @@ class TripTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc func handleExpandClose(button: UIButton) {
-        
-        let section = button.tag
-        var indexPaths = [IndexPath]()
-        let ailseName = trip.ailses[section].name
-        
-        for row in trip.ailses[section].items.indices {
-            let indexPath = IndexPath(row: row, section: section)
-            indexPaths.append(indexPath)
-        }
-        
-        let isItemExpanded = trip.ailses[section].isExpanded
-        trip.ailses[section].isExpanded = !isItemExpanded
-        
-        button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
-
-        if isItemExpanded {
-            tableView.deleteRows(at: indexPaths, with: .top)
-        } else {
-            tableView.insertRows(at: indexPaths, with: .top)
-        }
-        
-    }
-    
     // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return trip.ailses.count
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !trip.ailses[section].isExpanded {
-            return 0
-        }
-        return trip.ailses[section].items.count
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return trip.ailses[section].name
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let button = UIButton()
-        button.setTitle("Close \(trip.ailses[section].name)", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .purple
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        
-        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
-        button.tag = section
-        
-        return button
+        return trips.count
     }
     
     //MARK: - Delegate Methods
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-        let item = trip.ailses[indexPath.section].items[indexPath.row]
-        cell.textLabel?.text = item.name
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tripCell", for: indexPath)
+        let item = trips[indexPath.row].name
+        cell.textLabel?.text = item
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let tripped = trips[indexPath.row]
+        let listVC = storyboard?.instantiateViewController(withIdentifier: "ListsVC") as? ListTableViewController
+        listVC?.trip = tripped
+        navigationController?.pushViewController(listVC!, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
+    
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.

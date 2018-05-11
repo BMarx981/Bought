@@ -16,10 +16,8 @@
 		D3DAF978202A6343009DA521 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF976202A6343009DA521 /* Main.storyboard */; };
 		D3DAF97A202A6343009DA521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF979202A6343009DA521 /* Assets.xcassets */; };
 		D3DAF97D202A6343009DA521 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF97B202A6343009DA521 /* LaunchScreen.storyboard */; };
-		D3EE9D6D202A650500F8ED6C /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D6C202A650500F8ED6C /* WelcomeViewController.swift */; };
 		D3EE9D6E202A6B6F00F8ED6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3DAF984202A63D6009DA521 /* GoogleService-Info.plist */; };
 		D3EE9D70202B2D4E00F8ED6C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D6F202B2D4E00F8ED6C /* LoginViewController.swift */; };
-		D3EE9D72202B2D5F00F8ED6C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D71202B2D5F00F8ED6C /* RegisterViewController.swift */; };
 		D3EE9D74202B793700F8ED6C /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D73202B793700F8ED6C /* TripModel.swift */; };
 		D3EE9D76202B79FF00F8ED6C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D75202B79FF00F8ED6C /* Item.swift */; };
 		D3EE9D78202B84C200F8ED6C /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EE9D77202B84C200F8ED6C /* ListTableViewController.swift */; };
@@ -40,9 +38,7 @@
 		D3DAF97C202A6343009DA521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3DAF97E202A6343009DA521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bought/Utils/Info.plist; sourceTree = SOURCE_ROOT; };
 		D3DAF984202A63D6009DA521 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D3EE9D6C202A650500F8ED6C /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		D3EE9D6F202B2D4E00F8ED6C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		D3EE9D71202B2D5F00F8ED6C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D3EE9D73202B793700F8ED6C /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		D3EE9D75202B79FF00F8ED6C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		D3EE9D77202B84C200F8ED6C /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
@@ -103,9 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				D3DAF972202A6343009DA521 /* AppDelegate.swift */,
-				D3EE9D6C202A650500F8ED6C /* WelcomeViewController.swift */,
 				D3EE9D6F202B2D4E00F8ED6C /* LoginViewController.swift */,
-				D3EE9D71202B2D5F00F8ED6C /* RegisterViewController.swift */,
 				D3EE9D77202B84C200F8ED6C /* ListTableViewController.swift */,
 				D34302AE209BA249006D48FC /* TripTableViewController.swift */,
 				D3ADEBCA2048BA7A000EF54B /* EditItemViewController.swift */,
@@ -275,11 +269,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3EE9D70202B2D4E00F8ED6C /* LoginViewController.swift in Sources */,
-				D3EE9D72202B2D5F00F8ED6C /* RegisterViewController.swift in Sources */,
 				D34302AF209BA249006D48FC /* TripTableViewController.swift in Sources */,
 				D3EE9D74202B793700F8ED6C /* TripModel.swift in Sources */,
 				D3ADEBCB2048BA7A000EF54B /* EditItemViewController.swift in Sources */,
-				D3EE9D6D202A650500F8ED6C /* WelcomeViewController.swift in Sources */,
 				D34302B620A0EAF7006D48FC /* Ailse.swift in Sources */,
 				D3EE9D76202B79FF00F8ED6C /* Item.swift in Sources */,
 				D3DAF973202A6343009DA521 /* AppDelegate.swift in Sources */,
