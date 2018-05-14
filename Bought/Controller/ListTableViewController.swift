@@ -26,29 +26,6 @@ class ListTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    @objc func handleExpandClose(button: UIButton) {
-        
-        let section = button.tag
-        var indexPaths = [IndexPath]()
-        let ailseName = trip.ailses[section].name
-        
-        for row in trip.ailses[section].items.indices {
-            let indexPath = IndexPath(row: row, section: section)
-            indexPaths.append(indexPath)
-        }
-        
-        let isItemExpanded = trip.ailses[section].isExpanded
-        trip.ailses[section].isExpanded = !isItemExpanded
-        
-        button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
-        
-        if isItemExpanded {
-            tableView.deleteRows(at: indexPaths, with: .top)
-        } else {
-            tableView.insertRows(at: indexPaths, with: .top)
-        }
-    }
 
     //Mark : - Bar button Items
     @IBAction func addAilseTapped(_ sender: UIBarButtonItem) {
@@ -58,7 +35,6 @@ class ListTableViewController: UITableViewController {
             let newAilse = Ailse()
             newAilse.name = text
             self.trip.ailses.append(newAilse)
-            
             self.tableView.reloadData()
         }
         
@@ -97,6 +73,8 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
+        let longPressSectionButton = UILongPressGestureRecognizer(target:self, action: #selector(handleSectionLongPress))
+        button.addGestureRecognizer(longPressSectionButton)
         if trip.ailses[section].items.count == 0 {
             button.setTitle("\(trip.ailses[section].name)", for: .normal)
         } else {
@@ -130,6 +108,20 @@ class ListTableViewController: UITableViewController {
         item.bought = isBoughtValue
         
         toggleBought(cell, isBought: isBoughtValue)
+        let sectionItems = trip.ailses[indexPath.section].items
+        let filter = sectionItems.filter { item -> Bool in item.bought }
+        //Close section here.
+        if sectionItems.count == filter.count {
+            let isItemExpanded = trip.ailses[indexPath.section].isExpanded
+            trip.ailses[indexPath.section].isExpanded = !isItemExpanded
+            var indexPaths = [IndexPath]()
+            
+            for row in trip.ailses[indexPath.section].items.indices {
+                let ip = IndexPath(row: row, section: indexPath.section)
+                indexPaths.append(ip)
+            }
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -175,6 +167,38 @@ class ListTableViewController: UITableViewController {
         }
     }
     
+    //MARK: - Handle Functions
+    @objc func handleExpandClose(button: UIButton) {
+        
+        let section = button.tag
+        var indexPaths = [IndexPath]()
+        let ailseName = trip.ailses[section].name
+        
+        for row in trip.ailses[section].items.indices {
+            let indexPath = IndexPath(row: row, section: section)
+            indexPaths.append(indexPath)
+        }
+        
+        let isItemExpanded = trip.ailses[section].isExpanded
+        trip.ailses[section].isExpanded = !isItemExpanded
+        
+        button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
+        
+        if isItemExpanded {
+            tableView.deleteRows(at: indexPaths, with: .top)
+        } else {
+            tableView.insertRows(at: indexPaths, with: .top)
+        }
+    }
+    
+    @objc func handleSectionLongPress(_ button: UIButton) {
+        let section = button.tag
+        let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
+        editVC?.section = trip.ailses[section].name
+        editVC?.ailse = trip.ailses[section]
+        navigationController?.pushViewController(editVC!, animated: true)
+    }
+    
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
         sender.minimumPressDuration = 1.0
         if sender.state != UIGestureRecognizerState.ended {
@@ -205,5 +229,9 @@ extension ListTableViewController: EditItemDelegate {
         cell.textLabel?.text = item.name
         
         tableView.reloadData()
+    }
+    
+    func didEditSection(_ controller: EditItemViewController, ailse: Ailse, at indexPath: IndexPath) {
+        
     }
 }
