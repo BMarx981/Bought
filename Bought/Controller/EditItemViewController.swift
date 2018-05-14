@@ -18,12 +18,12 @@ class EditItemViewController: UIViewController {
     var delegate: EditItemDelegate?
     var item = Item()
     var index = IndexPath(row: 0, section: 0)
-    @IBOutlet weak var ItemNameOutlet: UILabel!
     @IBOutlet weak var editTextfield: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ItemNameOutlet.text = item.name
+        editTextfield.delegate = self
+        navigationItem.title = item.name
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,15 +36,14 @@ extension EditItemViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == editTextfield {
             textField.becomeFirstResponder()
+            item.name = textField.text ?? item.name
+            navigationItem.title = item.name
+            delegate?.didEditItem(self, item: item, at: index)
+            navigationController?.popViewController(animated: true)
         } else {
             textField.resignFirstResponder()
+            item.name = textField.text!
         }
         return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        item.name = textField.text!
-        ItemNameOutlet!.text = item.name
-        delegate?.didEditItem(self, item: item, at: index)
     }
 }

@@ -12,23 +12,19 @@ import Firebase
 class ListTableViewController: UITableViewController {
     
     var trip = TripModel()
+    var delegate: EditItemDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        delegate = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: nil)
-
-//        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: #selector(addTapped))
         navigationItem.title = trip.name
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @objc func handleExpandClose(button: UIButton) {
@@ -193,6 +189,7 @@ class ListTableViewController: UITableViewController {
                 let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
                 editVC?.item = trip.ailses[indexPath.section].items[indexPath.row]
                 editVC?.index = IndexPath(row: indexPath.row, section: indexPath.section)
+                editVC?.delegate = self
                 tableView.deselectRow(at: indexPath, animated: true)
                 navigationController?.pushViewController(editVC!, animated: true)
             }
@@ -202,8 +199,11 @@ class ListTableViewController: UITableViewController {
 
 //Mark: - EditItem Delegate
 extension ListTableViewController: EditItemDelegate {
-    func didEditItem(_ controller: EditItemViewController, item: Item, at: IndexPath) {
-        trip.ailses[at.section].items[at.row].name = item.name
-        trip.ailses[at.section].items[at.row].price = item.price
+    func didEditItem(_ controller: EditItemViewController, item: Item, at index: IndexPath) {
+        guard let cell = tableView.cellForRow(at: index) else { return }
+        trip.ailses[index.section].items[index.row] = item
+        cell.textLabel?.text = item.name
+        
+        tableView.reloadData()
     }
 }
