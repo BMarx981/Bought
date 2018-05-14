@@ -73,8 +73,6 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
-        let longPressSectionButton = UILongPressGestureRecognizer(target:self, action: #selector(handleSectionLongPress))
-        button.addGestureRecognizer(longPressSectionButton)
         if trip.ailses[section].items.count == 0 {
             button.setTitle("\(trip.ailses[section].name)", for: .normal)
         } else {
@@ -87,6 +85,8 @@ class ListTableViewController: UITableViewController {
         button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         button.tag = section
         
+        let longPressSectionButton = UILongPressGestureRecognizer(target:self, action: #selector(handleSectionLongPress))
+        button.addGestureRecognizer(longPressSectionButton)
         return button
     }
     
@@ -109,7 +109,7 @@ class ListTableViewController: UITableViewController {
         
         toggleBought(cell, isBought: isBoughtValue)
         let sectionItems = trip.ailses[indexPath.section].items
-        let filter = sectionItems.filter { item -> Bool in item.bought }
+        let filter = sectionItems.filter { item in item.bought }
         //Close section here.
         if sectionItems.count == filter.count {
             let isItemExpanded = trip.ailses[indexPath.section].isExpanded
@@ -121,6 +121,13 @@ class ListTableViewController: UITableViewController {
                 indexPaths.append(ip)
             }
             tableView.deleteRows(at: indexPaths, with: .fade)
+            
+            let sectionHeaderViews = tableView.headerView(forSection: indexPath.section)?.subviews
+            for headerView in sectionHeaderViews! {
+                if headerView is UIButton {
+                    print("YESSSS!!!!!")
+                }
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -191,12 +198,25 @@ class ListTableViewController: UITableViewController {
         }
     }
     
-    @objc func handleSectionLongPress(_ button: UIButton) {
-        let section = button.tag
-        let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
-        editVC?.section = trip.ailses[section].name
-        editVC?.ailse = trip.ailses[section]
-        navigationController?.pushViewController(editVC!, animated: true)
+    @objc func handleSectionLongPress(sender: UILongPressGestureRecognizer, button: UIButton) {
+        sender.minimumPressDuration = 1.0
+        if sender.state != UIGestureRecognizerState.ended {
+            return
+        }
+        
+        let point = sender.location(in: tableView)
+        let index = tableView.indexPathForRow(at: point)
+        
+        if index != nil && sender.state == UIGestureRecognizerState.ended {
+            print("Button tag : \(button.tag)")
+            if let indexPath = index {
+                let section = button.tag
+                let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
+                editVC?.section = trip.ailses[section].name
+                editVC?.ailse = trip.ailses[section]
+                navigationController?.pushViewController(editVC!, animated: true)
+            }
+        }
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
