@@ -14,6 +14,7 @@ class ListTableViewController: UITableViewController {
     var trip = TripModel()
     var delegate: EditItemDelegate?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -103,6 +104,7 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        
         let item = trip.ailses[indexPath.section].items[indexPath.row]
         let isBoughtValue = !item.bought
         item.bought = isBoughtValue
@@ -110,7 +112,7 @@ class ListTableViewController: UITableViewController {
         toggleBought(cell, isBought: isBoughtValue)
         let sectionItems = trip.ailses[indexPath.section].items
         let filter = sectionItems.filter { item in item.bought }
-        //Close section here.
+        //Close section when all cells are selected.
         if sectionItems.count == filter.count {
             let isItemExpanded = trip.ailses[indexPath.section].isExpanded
             trip.ailses[indexPath.section].isExpanded = !isItemExpanded
@@ -121,19 +123,12 @@ class ListTableViewController: UITableViewController {
                 indexPaths.append(ip)
             }
             tableView.deleteRows(at: indexPaths, with: .fade)
-            
-            let sectionHeaderViews = tableView.headerView(forSection: indexPath.section)?.subviews
-            for headerView in sectionHeaderViews! {
-                if headerView is UIButton {
-                    print("YESSSS!!!!!")
-                }
-            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 42
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -200,15 +195,13 @@ class ListTableViewController: UITableViewController {
     
     @objc func handleSectionLongPress(sender: UILongPressGestureRecognizer, button: UIButton) {
         sender.minimumPressDuration = 1.0
-        if sender.state != UIGestureRecognizerState.ended {
-            return
-        }
+        if sender.state != UIGestureRecognizerState.ended { return }
         
         let point = sender.location(in: tableView)
         let index = tableView.indexPathForRow(at: point)
         
+        print("Button tag : \(button.tag)")
         if index != nil && sender.state == UIGestureRecognizerState.ended {
-            print("Button tag : \(button.tag)")
             if let indexPath = index {
                 let section = button.tag
                 let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
@@ -245,6 +238,10 @@ class ListTableViewController: UITableViewController {
 extension ListTableViewController: EditItemDelegate {
     func didEditItem(_ controller: EditItemViewController, item: Item, at index: IndexPath) {
         guard let cell = tableView.cellForRow(at: index) else { return }
+        item.bought = false
+        cell.accessoryType = .none
+        cell.textLabel?.textColor = .black
+        cell.detailTextLabel?.textColor = .black
         trip.ailses[index.section].items[index.row] = item
         cell.textLabel?.text = item.name
         
