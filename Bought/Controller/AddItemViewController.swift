@@ -64,12 +64,10 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
             var index = IndexPath()
             if let selection = tableView.indexPathForSelectedRow {
                 index = selection
-                print(index)
+                item.name = textfieledOutlet.text!
+                delegate?.didAddItem(self, item: item, ailse: trip.ailses[index.row], at: editedIndexPath)
+                textfieledOutlet.text! = ""
             }
-            
-            item.name = textfieledOutlet.text!
-            delegate?.didAddItem(self, item: item, ailse: trip.ailses[index.row], at: editedIndexPath)
-            textfieledOutlet.text! = ""
         } else {
             textField.resignFirstResponder()
         }

@@ -189,15 +189,27 @@ class ListTableViewController: UITableViewController {
     }
     
     @objc func handleSectionLongPress(sender: UILongPressGestureRecognizer) {
+        sender.minimumPressDuration = 1.0
+        if sender.state != UIGestureRecognizerState.ended { return }
+        
         let point = sender.location(in: tableView)
-        if let index = tableView.indexPathForRow(at: point) {
-            let headerView = tableView.headerView(forSection: index.section)
-            if let subViews = headerView?.subviews {
-                for view in subViews {
-                    if view is UIButton {
-                        print("Finally")
-                    }
+        let index = tableView.indexPathForRow(at: point)
+        
+        if index != nil && sender.state == UIGestureRecognizerState.ended {
+            if let indexPath = index {
+                let ailseName = trip.ailses[indexPath.section].name
+                let alert = UIAlertController(title: "Edit \(ailseName)", message: "Edit the ailse name", preferredStyle: .alert)
+                let editAction = UIAlertAction(title: "Change", style: .default) { _ in
+                    guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+                    self.trip.ailses[indexPath.section].name = text
+                    self.tableView.reloadData()
                 }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                alert.addTextField()
+                alert.addAction(editAction)
+                alert.addAction(cancelAction)
+                present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -253,17 +265,14 @@ extension ListTableViewController: EditItemDelegate {
         cell.textLabel?.text = item.name
         tableView.reloadData()
     }
-    
-    func didEditSection(_ controller: EditItemViewController, ailse: Ailse, at indexPath: IndexPath) {
-        
-    }
 }
 
+//Mark: - AddItem Delegate
 extension ListTableViewController: AddItemDelegate {
     
     func didAddItem(_ controller: AddItemViewController, item: Item, ailse: Ailse, at indexPath: IndexPath) {
         let lastRow = trip.ailses[indexPath.row].items.count
-        trip.ailses[indexPath.row].items.append(item)
+        trip.ailses[lastRow].items.append(item)
         tableView.beginUpdates()
         tableView.insertRows(at: [IndexPath(row: lastRow, section: indexPath.row)], with: .fade)
         tableView.endUpdates()

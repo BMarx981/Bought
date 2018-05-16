@@ -11,7 +11,6 @@ import Firebase
 
 protocol EditItemDelegate {
     func didEditItem(_ controller: EditItemViewController, item: Item, at indexPath: IndexPath)
-    func didEditSection(_ controller: EditItemViewController, ailse: Ailse, at indexPath: IndexPath)
 }
 
 class EditItemViewController: UIViewController {
