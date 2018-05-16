@@ -13,13 +13,12 @@ class ListTableViewController: UITableViewController {
     
     var trip = TripModel()
     var delegate: EditItemDelegate?
-    
+    var addItemDelegate: AddItemDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addItemDelegate = self
         delegate = self
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
         navigationItem.title = trip.name
     }
@@ -48,10 +47,19 @@ class ListTableViewController: UITableViewController {
     
     @IBAction func addItemTapped(_ sender: UIBarButtonItem) {
         
+        let add = storyboard?.instantiateViewController(withIdentifier: "addItemVC") as! AddItemViewController
+        add.trip = trip
+        add.delegate = self
+        navigationController?.pushViewController(add, animated: true)
     }
     
     @IBAction func clearAllTapped(_ sender: UIBarButtonItem) {
-        print("Clear All")
+        for ailse in trip.ailses {
+            print("Ailse name: \(ailse.name)")
+            for item in ailse.items {
+                print(item.name)
+            }
+        }
     }
     
     
@@ -82,12 +90,11 @@ class ListTableViewController: UITableViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .purple
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        
-        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         button.tag = section
-        
         let longPressSectionButton = UILongPressGestureRecognizer(target:self, action: #selector(handleSectionLongPress))
         button.addGestureRecognizer(longPressSectionButton)
+        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+        
         return button
     }
     
@@ -157,18 +164,6 @@ class ListTableViewController: UITableViewController {
          return true
      }
     
-    func toggleBought(_ cell: UITableViewCell, isBought: Bool) {
-        if !isBought {
-            cell.accessoryType = .none
-            cell.textLabel?.textColor = .black
-            cell.detailTextLabel?.textColor = .black
-        } else {
-            cell.accessoryType = .checkmark
-            cell.textLabel?.textColor = .gray
-            cell.detailTextLabel?.textColor = .gray
-        }
-    }
-    
     //MARK: - Handle Functions
     @objc func handleExpandClose(button: UIButton) {
         
@@ -193,30 +188,23 @@ class ListTableViewController: UITableViewController {
         }
     }
     
-    @objc func handleSectionLongPress(sender: UILongPressGestureRecognizer, button: UIButton) {
-        sender.minimumPressDuration = 1.0
-        if sender.state != UIGestureRecognizerState.ended { return }
-        
+    @objc func handleSectionLongPress(sender: UILongPressGestureRecognizer) {
         let point = sender.location(in: tableView)
-        let index = tableView.indexPathForRow(at: point)
-        
-        print("Button tag : \(button.tag)")
-        if index != nil && sender.state == UIGestureRecognizerState.ended {
-            if let indexPath = index {
-                let section = button.tag
-                let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
-                editVC?.section = trip.ailses[section].name
-                editVC?.ailse = trip.ailses[section]
-                navigationController?.pushViewController(editVC!, animated: true)
+        if let index = tableView.indexPathForRow(at: point) {
+            let headerView = tableView.headerView(forSection: index.section)
+            if let subViews = headerView?.subviews {
+                for view in subViews {
+                    if view is UIButton {
+                        print("Finally")
+                    }
+                }
             }
         }
     }
     
     @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
         sender.minimumPressDuration = 1.0
-        if sender.state != UIGestureRecognizerState.ended {
-            return
-        }
+        if sender.state != UIGestureRecognizerState.ended { return }
         
         let point = sender.location(in: tableView)
         let index = tableView.indexPathForRow(at: point)
@@ -232,6 +220,27 @@ class ListTableViewController: UITableViewController {
             }
         }
     }
+    
+    //MARK: - Toggle bought bool
+    func toggleBought(_ cell: UITableViewCell, isBought: Bool) {
+        if !isBought {
+            setCellToNormal(cell)
+        } else {
+            setCellToChecked(cell)
+        }
+    }
+    
+    func setCellToNormal(_ cell: UITableViewCell) {
+        cell.accessoryType = .none
+        cell.textLabel?.textColor = .black
+        cell.detailTextLabel?.textColor = .black
+    }
+    
+    func setCellToChecked(_ cell: UITableViewCell) {
+        cell.accessoryType = .checkmark
+        cell.textLabel?.textColor = .gray
+        cell.detailTextLabel?.textColor = .gray
+    }
 }
 
 //Mark: - EditItem Delegate
@@ -239,16 +248,24 @@ extension ListTableViewController: EditItemDelegate {
     func didEditItem(_ controller: EditItemViewController, item: Item, at index: IndexPath) {
         guard let cell = tableView.cellForRow(at: index) else { return }
         item.bought = false
-        cell.accessoryType = .none
-        cell.textLabel?.textColor = .black
-        cell.detailTextLabel?.textColor = .black
+        setCellToNormal(cell)
         trip.ailses[index.section].items[index.row] = item
         cell.textLabel?.text = item.name
-        
         tableView.reloadData()
     }
     
     func didEditSection(_ controller: EditItemViewController, ailse: Ailse, at indexPath: IndexPath) {
         
+    }
+}
+
+extension ListTableViewController: AddItemDelegate {
+    
+    func didAddItem(_ controller: AddItemViewController, item: Item, ailse: Ailse, at indexPath: IndexPath) {
+        let lastRow = trip.ailses[indexPath.row].items.count
+        trip.ailses[indexPath.row].items.append(item)
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: lastRow, section: indexPath.row)], with: .fade)
+        tableView.endUpdates()
     }
 }

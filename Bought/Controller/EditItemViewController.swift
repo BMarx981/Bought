@@ -22,6 +22,7 @@ class EditItemViewController: UIViewController {
     var ailse = Ailse()
     var index = IndexPath(row: 0, section: 0)
     var isSection = false
+    
     @IBOutlet weak var editTextfield: UITextField!
     
     override func viewDidLoad() {
@@ -43,13 +44,13 @@ extension EditItemViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == editTextfield {
-            textField.becomeFirstResponder()
+            textField.resignFirstResponder()
             item.name = textField.text ?? item.name
             navigationItem.title = item.name
             delegate?.didEditItem(self, item: item, at: index)
             navigationController?.popViewController(animated: true)
         } else {
-            textField.resignFirstResponder()
+            textField.becomeFirstResponder()
             item.name = textField.text!
         }
         return true
