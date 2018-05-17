@@ -29,12 +29,12 @@ class ListTableViewController: UITableViewController {
 
     //Mark : - Bar button Items
     @IBAction func addAilseTapped(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Add Ailse", message: "Enter the name of the new ailse", preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: "Add Ailse", style: .default) { _ in
+        let alert = UIAlertController(title: "Add Aisle", message: "Enter the name of the new ailse", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Add Aisle", style: .default) { _ in
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
-            let newAilse = Ailse()
-            newAilse.name = text
-            self.trip.ailses.append(newAilse)
+            let newAisle = Ailse()
+            newAisle.name = text
+            self.trip.ailses.append(newAisle)
             self.tableView.reloadData()
         }
         
@@ -54,17 +54,23 @@ class ListTableViewController: UITableViewController {
     }
     
     @IBAction func clearAllTapped(_ sender: UIBarButtonItem) {
-        for ailse in trip.ailses {
-            print("Ailse name: \(ailse.name)")
-            for item in ailse.items {
-                print(item.name)
+        let alert = UIAlertController(title: "Clear All", message: "Are you sure you'd like to clear all items?", preferredStyle: .alert)
+        let clearAction = UIAlertAction(title: "Clear All", style: .default) { _ in
+            for ailse in self.trip.ailses {
+                ailse.items.removeAll()
             }
+            self.tableView.reloadData()
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(clearAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func deleteAilseTapped(_ sender: UIBarButtonItem) {
+    }
     
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return trip.ailses.count
     }
@@ -144,12 +150,9 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            
             trip.ailses[indexPath.section].items.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
@@ -158,9 +161,7 @@ class ListTableViewController: UITableViewController {
      
      }
 
-     // Override to support conditional rearranging of the table view.
      override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
          return true
      }
     
@@ -198,7 +199,7 @@ class ListTableViewController: UITableViewController {
         if index != nil && sender.state == UIGestureRecognizerState.ended {
             if let indexPath = index {
                 let ailseName = trip.ailses[indexPath.section].name
-                let alert = UIAlertController(title: "Edit \(ailseName)", message: "Edit the ailse name", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Edit \(ailseName)", message: "Edit the aisle name", preferredStyle: .alert)
                 let editAction = UIAlertAction(title: "Change", style: .default) { _ in
                     guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
                     self.trip.ailses[indexPath.section].name = text
@@ -270,11 +271,8 @@ extension ListTableViewController: EditItemDelegate {
 //Mark: - AddItem Delegate
 extension ListTableViewController: AddItemDelegate {
     
-    func didAddItem(_ controller: AddItemViewController, item: Item, ailse: Ailse, at indexPath: IndexPath) {
-        let lastRow = trip.ailses[indexPath.row].items.count
-        trip.ailses[lastRow].items.append(item)
-        tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath(row: lastRow, section: indexPath.row)], with: .fade)
-        tableView.endUpdates()
+    func didAddItem(_ controller: AddItemViewController, item: Item, aisle: Ailse, in section: Int) {
+        trip.ailses[section].items.append(item)
+        tableView.reloadData()
     }
 }

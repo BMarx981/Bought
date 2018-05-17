@@ -9,27 +9,25 @@
 import UIKit
 
 protocol AddItemDelegate {
-    func didAddItem(_ controller: AddItemViewController, item: Item, ailse: Ailse, at indexPath: IndexPath)
+    func didAddItem(_ controller: AddItemViewController, item: Item, aisle: Ailse, in section: Int)
 }
 
 class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     var trip = TripModel()
-    var ailses = [Ailse]()
+    var aisle = [Ailse]()
     var editedIndexPath = IndexPath()
     var delegate: AddItemDelegate?
     
-    @IBOutlet weak var itemLabel: UILabel!
     @IBOutlet weak var textfieledOutlet: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         textfieledOutlet.delegate = self
-        navigationItem.title = "Choose an ailse"
-        itemLabel?.text = "Enter the new item name"
+        navigationItem.title = "Choose an aisle"
         for ailse in trip.ailses {
-            ailses.append(ailse)
+            aisle.append(ailse)
         }
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "itemCell")
         // Do any additional setup after loading the view.
@@ -42,19 +40,21 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - TableViewDelegate methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemLabel?.text = "Selected ailse: \(ailses[indexPath.row].name)"
         editedIndexPath = indexPath
     }
     
     // MARK: - TableViewDataSource methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ailses.count
+        return aisle.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
-        cell.textLabel?.text = trip.ailses[indexPath.row].name
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? UITableViewCell
+        cell?.textLabel?.text = trip.ailses[indexPath.row].name
+        cell?.detailTextLabel?.text = String(trip.ailses[indexPath.row].items.count)
+//        let label = cell.viewWithTag(222) as! UILabel
+//        label.text = String(trip.ailses[indexPath.section].items.count)
+        return cell!
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -65,7 +65,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let selection = tableView.indexPathForSelectedRow {
                 index = selection
                 item.name = textfieledOutlet.text!
-                delegate?.didAddItem(self, item: item, ailse: trip.ailses[index.row], at: editedIndexPath)
+                delegate?.didAddItem(self, item: item, aisle: trip.ailses[index.row], in: editedIndexPath.row)
                 textfieledOutlet.text! = ""
             }
         } else {
