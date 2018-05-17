@@ -25,6 +25,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         textfieledOutlet.delegate = self
+        textfieledOutlet.clearButtonMode = .always
         navigationItem.title = "Choose an aisle"
         for ailse in trip.aisles {
             aisle.append(ailse)

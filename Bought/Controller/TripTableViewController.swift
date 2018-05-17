@@ -80,6 +80,8 @@ class TripTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tripCell", for: indexPath)
         let item = trips[indexPath.row].name
         cell.textLabel?.text = item
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        cell.addGestureRecognizer(longPress)
         return cell
     }
     
@@ -102,6 +104,33 @@ class TripTableViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
+        }
+    }
+    
+    //Mark: - Handle Long Press
+    @objc func handleLongPress(sender: UILongPressGestureRecognizer) {
+        sender.minimumPressDuration = 1.0
+        if sender.state != UIGestureRecognizerState.ended { return }
+        let point = sender.location(in: tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        
+        if indexPath != nil && sender.state == UIGestureRecognizerState.ended {
+            if let index = indexPath {
+                let alert = UIAlertController(title: "Edit Trip", message: "Enter the new trip name", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Edit \(self.trips[index.row].name)", style: .default) { _ in
+                    guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+                    self.trips[index.row].name = text
+                    self.tableView.reloadData()
+                }
+                let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+                alert.addTextField() { textfield in
+                    textfield.clearButtonMode = .always
+                    textfield.text = self.trips[index.row].name
+                }
+                alert.addAction(action)
+                alert.addAction(cancel)
+                present(alert, animated: true, completion: nil)
+            }
         }
     }
 

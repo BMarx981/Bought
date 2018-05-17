@@ -232,6 +232,7 @@ class ListTableViewController: UITableViewController {
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
                 alert.addTextField() { textfield in
+                    textfield.clearButtonMode = .always
                     textfield.text = self.trip.aisles[indexPath.section].name
                 }
                 alert.addAction(editAction)
