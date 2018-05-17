@@ -12,7 +12,7 @@ class TripModel {
     var name = ""
     var receipes = [Item]()
     var totalPrice = 0.0
-    var ailses = [Ailse]()
+    var aisles = [Aisle]()
     
     func convertToItems(_ items: [String]) -> [Item] {
         var list = [Item]()

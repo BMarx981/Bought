@@ -23,15 +23,15 @@ class TripTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ailses = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
-        for key in ailses.keys {
+        let aisles = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
+        for key in aisles.keys {
             sectionNames.append(key)
         }
         
-        for ailseObj in 0..<ailses.count {
-            let ailse = Ailse(name: sectionNames[ailseObj], list: trip.convertToItems(ailses[sectionNames[ailseObj]]!), expand: true)
-            trip.ailses.append(ailse)
-            trip2.ailses.append(ailse)
+        for aisleObj in 0..<aisles.count {
+            let aisle = aisles(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
+            trip.aisles.append(aisle)
+            trip2.aisles.append(aisle)
         }
 
         trip.name = "Stop and Shop"

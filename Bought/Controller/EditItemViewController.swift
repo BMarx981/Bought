@@ -18,7 +18,7 @@ class EditItemViewController: UIViewController {
     var delegate: EditItemDelegate?
     var item = Item()
     var section: String?
-    var ailse = Ailse()
+    var aisle = Aisle()
     var index = IndexPath(row: 0, section: 0)
     var isSection = false
     

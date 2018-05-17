@@ -9,13 +9,13 @@
 import UIKit
 
 protocol AddItemDelegate {
-    func didAddItem(_ controller: AddItemViewController, item: Item, aisle: Ailse, in section: Int)
+    func didAddItem(item: Item, in section: Int)
 }
 
 class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     var trip = TripModel()
-    var aisle = [Ailse]()
+    var aisle = [Aisle]()
     var editedIndexPath = IndexPath()
     var delegate: AddItemDelegate?
     
@@ -26,7 +26,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         textfieledOutlet.delegate = self
         navigationItem.title = "Choose an aisle"
-        for ailse in trip.ailses {
+        for ailse in trip.aisles {
             aisle.append(ailse)
         }
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "itemCell")
@@ -50,10 +50,9 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? UITableViewCell
-        cell?.textLabel?.text = trip.ailses[indexPath.row].name
-        cell?.detailTextLabel?.text = String(trip.ailses[indexPath.row].items.count)
-//        let label = cell.viewWithTag(222) as! UILabel
-//        label.text = String(trip.ailses[indexPath.section].items.count)
+        cell?.textLabel?.text = trip.aisles[indexPath.row].name
+        cell?.detailTextLabel?.text = String(trip.aisles[indexPath.row].items.count)
+
         return cell!
     }
     
@@ -65,7 +64,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let selection = tableView.indexPathForSelectedRow {
                 index = selection
                 item.name = textfieledOutlet.text!
-                delegate?.didAddItem(self, item: item, aisle: trip.ailses[index.row], in: editedIndexPath.row)
+                delegate?.didAddItem(item: item, in: editedIndexPath.row)
                 textfieledOutlet.text! = ""
             }
         } else {

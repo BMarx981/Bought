@@ -32,9 +32,9 @@ class ListTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Add Aisle", message: "Enter the name of the new ailse", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Add Aisle", style: .default) { _ in
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
-            let newAisle = Ailse()
+            let newAisle = Aisle()
             newAisle.name = text
-            self.trip.ailses.append(newAisle)
+            self.trip.aisles.append(newAisle)
             self.tableView.reloadData()
         }
         
@@ -56,8 +56,8 @@ class ListTableViewController: UITableViewController {
     @IBAction func clearAllTapped(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "Clear All", message: "Are you sure you'd like to clear all items?", preferredStyle: .alert)
         let clearAction = UIAlertAction(title: "Clear All", style: .default) { _ in
-            for ailse in self.trip.ailses {
-                ailse.items.removeAll()
+            for aisle in self.trip.aisles {
+                aisle.items.removeAll()
             }
             self.tableView.reloadData()
         }
@@ -72,26 +72,26 @@ class ListTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return trip.ailses.count
+        return trip.aisles.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !trip.ailses[section].isExpanded {
+        if !trip.aisles[section].isExpanded {
             return 0
         }
-        return trip.ailses[section].items.count
+        return trip.aisles[section].items.count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return trip.ailses[section].name
+        return trip.aisles[section].name
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
-        if trip.ailses[section].items.count == 0 {
-            button.setTitle("\(trip.ailses[section].name)", for: .normal)
+        if trip.aisles[section].items.count == 0 {
+            button.setTitle("\(trip.aisles[section].name)", for: .normal)
         } else {
-            button.setTitle("Close \(trip.ailses[section].name)", for: .normal)
+            button.setTitle("Close \(trip.aisles[section].name)", for: .normal)
         }
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .purple
@@ -107,7 +107,7 @@ class ListTableViewController: UITableViewController {
     //MARK: - Delegate Methods
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
-        let item = trip.ailses[indexPath.section].items[indexPath.row]
+        let item = trip.aisles[indexPath.section].items[indexPath.row]
         cell.textLabel?.text = item.name
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         cell.addGestureRecognizer(longPress)
@@ -118,20 +118,20 @@ class ListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
-        let item = trip.ailses[indexPath.section].items[indexPath.row]
+        let item = trip.aisles[indexPath.section].items[indexPath.row]
         let isBoughtValue = !item.bought
         item.bought = isBoughtValue
         
         toggleBought(cell, isBought: isBoughtValue)
-        let sectionItems = trip.ailses[indexPath.section].items
+        let sectionItems = trip.aisles[indexPath.section].items
         let filter = sectionItems.filter { item in item.bought }
         //Close section when all cells are selected.
         if sectionItems.count == filter.count {
-            let isItemExpanded = trip.ailses[indexPath.section].isExpanded
-            trip.ailses[indexPath.section].isExpanded = !isItemExpanded
+            let isItemExpanded = trip.aisles[indexPath.section].isExpanded
+            trip.aisles[indexPath.section].isExpanded = !isItemExpanded
             var indexPaths = [IndexPath]()
             
-            for row in trip.ailses[indexPath.section].items.indices {
+            for row in trip.aisles[indexPath.section].items.indices {
                 let ip = IndexPath(row: row, section: indexPath.section)
                 indexPaths.append(ip)
             }
@@ -150,7 +150,7 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            trip.ailses[indexPath.section].items.remove(at: indexPath.row)
+            trip.aisles[indexPath.section].items.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
         }
@@ -170,15 +170,15 @@ class ListTableViewController: UITableViewController {
         
         let section = button.tag
         var indexPaths = [IndexPath]()
-        let ailseName = trip.ailses[section].name
+        let ailseName = trip.aisles[section].name
         
-        for row in trip.ailses[section].items.indices {
+        for row in trip.aisles[section].items.indices {
             let indexPath = IndexPath(row: row, section: section)
             indexPaths.append(indexPath)
         }
         
-        let isItemExpanded = trip.ailses[section].isExpanded
-        trip.ailses[section].isExpanded = !isItemExpanded
+        let isItemExpanded = trip.aisles[section].isExpanded
+        trip.aisles[section].isExpanded = !isItemExpanded
         
         button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
         
@@ -198,11 +198,11 @@ class ListTableViewController: UITableViewController {
         
         if index != nil && sender.state == UIGestureRecognizerState.ended {
             if let indexPath = index {
-                let ailseName = trip.ailses[indexPath.section].name
+                let ailseName = trip.aisles[indexPath.section].name
                 let alert = UIAlertController(title: "Edit \(ailseName)", message: "Edit the aisle name", preferredStyle: .alert)
                 let editAction = UIAlertAction(title: "Change", style: .default) { _ in
                     guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
-                    self.trip.ailses[indexPath.section].name = text
+                    self.trip.aisles[indexPath.section].name = text
                     self.tableView.reloadData()
                 }
                 
@@ -225,7 +225,7 @@ class ListTableViewController: UITableViewController {
         if index != nil && sender.state == UIGestureRecognizerState.ended {
             if let indexPath = index {
                 let editVC = storyboard?.instantiateViewController(withIdentifier: "EditVC") as? EditItemViewController
-                editVC?.item = trip.ailses[indexPath.section].items[indexPath.row]
+                editVC?.item = trip.aisles[indexPath.section].items[indexPath.row]
                 editVC?.index = IndexPath(row: indexPath.row, section: indexPath.section)
                 editVC?.delegate = self
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -262,7 +262,7 @@ extension ListTableViewController: EditItemDelegate {
         guard let cell = tableView.cellForRow(at: index) else { return }
         item.bought = false
         setCellToNormal(cell)
-        trip.ailses[index.section].items[index.row] = item
+        trip.aisles[index.section].items[index.row] = item
         cell.textLabel?.text = item.name
         tableView.reloadData()
     }
@@ -271,8 +271,8 @@ extension ListTableViewController: EditItemDelegate {
 //Mark: - AddItem Delegate
 extension ListTableViewController: AddItemDelegate {
     
-    func didAddItem(_ controller: AddItemViewController, item: Item, aisle: Ailse, in section: Int) {
-        trip.ailses[section].items.append(item)
+    func didAddItem(item: Item, in section: Int) {
+        trip.aisles[section].items.append(item)
         tableView.reloadData()
     }
 }

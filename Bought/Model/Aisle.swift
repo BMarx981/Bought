@@ -1,5 +1,5 @@
 //
-//  Ailse.swift
+//  Aisle.swift
 //  Bought
 //
 //  Created by Marx, Brian on 5/7/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Ailse {
+class Aisle {
     var name = ""
     var isExpanded = false
     var items = [Item]()
@@ -22,15 +22,16 @@ class Ailse {
     }
 }
 
-extension Ailse: Equatable {
-    static func ==(lhs: Ailse, rhs: Ailse) -> Bool {
+extension Aisle: Equatable {
+    static func ==(lhs: Aisle, rhs: Aisle) -> Bool {
         return lhs.name == rhs.name &&
-        lhs.isExpanded == rhs.isExpanded
+            lhs.isExpanded == rhs.isExpanded
     }
 }
 
-extension Ailse: Hashable {
+extension Aisle: Hashable {
     var hashValue: Int {
-         return name.hashValue ^ isExpanded.hashValue
+        return name.hashValue ^ isExpanded.hashValue
     }
 }
+
