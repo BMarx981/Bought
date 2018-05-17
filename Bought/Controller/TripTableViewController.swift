@@ -29,7 +29,7 @@ class TripTableViewController: UITableViewController {
         }
         
         for aisleObj in 0..<aisles.count {
-            let aisle = aisles(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
+            let aisle = Aisle(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
             trip.aisles.append(aisle)
             trip2.aisles.append(aisle)
         }
@@ -39,11 +39,6 @@ class TripTableViewController: UITableViewController {
 
         trips.append(trip)
         trips.append(trip2)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        
     }
     
     override func didReceiveMemoryWarning() {

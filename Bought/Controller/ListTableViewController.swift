@@ -34,6 +34,7 @@ class ListTableViewController: UITableViewController {
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
             let newAisle = Aisle()
             newAisle.name = text
+            newAisle.isExpanded = true
             self.trip.aisles.append(newAisle)
             self.tableView.reloadData()
         }
@@ -68,6 +69,29 @@ class ListTableViewController: UITableViewController {
     }
     
     @IBAction func deleteAilseTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Delete Aisle", message: "Enter the name of the aisle you wish to delete", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .default) { _ in
+            guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+            let aisleToFind = text.uppercased()
+            var index = 0
+            var wasFound = false
+            for i in 0..<self.trip.aisles.count {
+                if self.trip.aisles[i].name.uppercased() == aisleToFind {
+                    wasFound = true
+                    index = i
+                }
+            }
+            if wasFound {
+                self.trip.aisles.remove(at: index)
+            }
+            
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addTextField()
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -207,7 +231,9 @@ class ListTableViewController: UITableViewController {
                 }
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-                alert.addTextField()
+                alert.addTextField() { textfield in
+                    textfield.text = self.trip.aisles[indexPath.section].name
+                }
                 alert.addAction(editAction)
                 alert.addAction(cancelAction)
                 present(alert, animated: true, completion: nil)

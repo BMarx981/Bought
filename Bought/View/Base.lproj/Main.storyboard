@@ -114,10 +114,10 @@
             </objects>
             <point key="canvasLocation" x="2398" y="197"/>
         </scene>
-        <!--Ailses-->
+        <!--Aisles-->
         <scene sceneID="VMm-u3-F6w">
             <objects>
-                <tableViewController storyboardIdentifier="ListsVC" id="2cN-XJ-yfP" userLabel="Ailses" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ListsVC" id="2cN-XJ-yfP" userLabel="Aisles" customClass="ListTableViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="MpV-Wh-JVN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,7 +126,7 @@
                             <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <items>
-                                <barButtonItem title="Add Ailse" id="6Gw-QV-kD2">
+                                <barButtonItem title="Add Aisle" id="6Gw-QV-kD2" userLabel="Add Aisle">
                                     <connections>
                                         <action selector="addAilseTapped:" destination="2cN-XJ-yfP" id="PBu-Y8-I8u"/>
                                     </connections>
@@ -136,7 +136,7 @@
                                         <action selector="addItemTapped:" destination="2cN-XJ-yfP" id="RQH-Qq-mkH"/>
                                     </connections>
                                 </barButtonItem>
-                                <barButtonItem title="Delete Ailse" id="Lwx-vz-oQ5">
+                                <barButtonItem title="Delete Aisle" id="Lwx-vz-oQ5" userLabel="Delete Aisle">
                                     <connections>
                                         <action selector="deleteAilseTapped:" destination="2cN-XJ-yfP" id="2dX-Cx-4Op"/>
                                     </connections>
