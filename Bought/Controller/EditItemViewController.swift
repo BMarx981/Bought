@@ -37,6 +37,11 @@ class EditItemViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    @IBAction func cameraButtonTapped(_ sender: UIBarButtonItem) {
+    }
+    
+    
 }
 
 extension EditItemViewController: UITextFieldDelegate {

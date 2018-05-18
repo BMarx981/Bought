@@ -16,8 +16,8 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     var trip = TripModel()
     var aisle = [Aisle]()
-    var editedIndexPath = IndexPath()
     var delegate: AddItemDelegate?
+    var focusView = IndexPath()
     
     @IBOutlet weak var textfieledOutlet: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -25,13 +25,13 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         textfieledOutlet.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
         textfieledOutlet.clearButtonMode = .always
         navigationItem.title = "Choose an aisle"
         for ailse in trip.aisles {
             aisle.append(ailse)
         }
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "itemCell")
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,7 +41,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - TableViewDelegate methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editedIndexPath = indexPath
+        textfieledOutlet.becomeFirstResponder()
     }
     
     // MARK: - TableViewDataSource methods
@@ -50,24 +50,22 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? UITableViewCell
-        cell?.textLabel?.text = trip.aisles[indexPath.row].name
-        cell?.detailTextLabel?.text = String(trip.aisles[indexPath.row].items.count)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
+        cell.textLabel?.text = trip.aisles[indexPath.row].name
+        cell.detailTextLabel?.text = "Total #: \(trip.aisles[indexPath.row].items.count)"
 
-        return cell!
+        return cell
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let item = Item()
-        if textField == textfieledOutlet {
-            textField.becomeFirstResponder()
-            var index = IndexPath()
-            if let selection = tableView.indexPathForSelectedRow {
-                index = selection
-                item.name = textfieledOutlet.text!
-                delegate?.didAddItem(item: item, in: editedIndexPath.row)
-                textfieledOutlet.text! = ""
-            }
+        if textField.text == "" { return true }
+        if textField == textfieledOutlet, let indexPath = tableView.indexPathForSelectedRow {
+            item.name = textfieledOutlet.text!
+            delegate?.didAddItem(item: item, in: indexPath.row)
+            textfieledOutlet.text! = ""
+            tableView.reloadData()
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         } else {
             textField.resignFirstResponder()
         }

@@ -27,7 +27,7 @@ class TripTableViewController: UITableViewController {
         for key in aisles.keys {
             sectionNames.append(key)
         }
-        
+
         for aisleObj in 0..<aisles.count {
             let aisle = Aisle(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
             trip.aisles.append(aisle)
@@ -54,6 +54,7 @@ class TripTableViewController: UITableViewController {
         let saveAction = UIAlertAction(title: "New Trip", style: .default) { _ in
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
             let newTrip = TripModel()
+            if text == "" {return}
             newTrip.name = text
             self.trips.append(newTrip)
             

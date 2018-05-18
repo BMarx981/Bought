@@ -32,6 +32,7 @@ class ListTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Add Aisle", message: "Enter the name of the new ailse", preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Add Aisle", style: .default) { _ in
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
+            if text == "" {return}
             let newAisle = Aisle()
             newAisle.name = text
             newAisle.isExpanded = true
@@ -73,6 +74,7 @@ class ListTableViewController: UITableViewController {
         let deleteAction = UIAlertAction(title: "Delete", style: .default) { _ in
             guard let textfield = alert.textFields?.first, let text = textfield.text else { return }
             let aisleToFind = text.uppercased()
+            if text == "" {return}
             var index = 0
             var wasFound = false
             for i in 0..<self.trip.aisles.count {
@@ -112,14 +114,13 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let button = UIButton()
-        if trip.aisles[section].items.count == 0 {
-            button.setTitle("\(trip.aisles[section].name)", for: .normal)
-        } else {
-            button.setTitle("Close \(trip.aisles[section].name)", for: .normal)
-        }
+        button.setTitle("\(trip.aisles[section].name)", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.titleEdgeInsets = .init(top: 20.0, left: 8.0, bottom: 2.0, right: 10.0)
         button.backgroundColor = .purple
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        
         button.tag = section
         let longPressSectionButton = UILongPressGestureRecognizer(target:self, action: #selector(handleSectionLongPress))
         button.addGestureRecognizer(longPressSectionButton)
@@ -204,7 +205,7 @@ class ListTableViewController: UITableViewController {
         let isItemExpanded = trip.aisles[section].isExpanded
         trip.aisles[section].isExpanded = !isItemExpanded
         
-        button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
+        //button.setTitle(isItemExpanded ? "Expand \(ailseName)" : "Close \(ailseName)", for: .normal)
         
         if isItemExpanded {
             tableView.deleteRows(at: indexPaths, with: .top)
@@ -219,7 +220,7 @@ class ListTableViewController: UITableViewController {
         
         let point = sender.location(in: tableView)
         let index = tableView.indexPathForRow(at: point)
-        
+        print("Index: \(index)")
         if index != nil && sender.state == UIGestureRecognizerState.ended {
             if let indexPath = index {
                 let ailseName = trip.aisles[indexPath.section].name
