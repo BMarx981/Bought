@@ -19,8 +19,11 @@ class ListTableViewController: UITableViewController {
         super.viewDidLoad()
         addItemDelegate = self
         delegate = self
-        
+        let purple = UIColor(red: 0.73, green: 0.0, blue: 0.73, alpha: 1.0)
+        let textAttributes = [NSAttributedStringKey.foregroundColor:purple]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationItem.title = trip.name
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -118,7 +121,7 @@ class ListTableViewController: UITableViewController {
         button.setTitleColor(.white, for: .normal)
         button.contentHorizontalAlignment = .left
         button.titleEdgeInsets = .init(top: 20.0, left: 8.0, bottom: 2.0, right: 10.0)
-        button.backgroundColor = .purple
+        button.backgroundColor = UIColor(red: 0.73, green: 0.0, blue: 0.73, alpha: 1.0)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         
         button.tag = section

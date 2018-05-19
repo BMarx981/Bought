@@ -39,8 +39,13 @@ class EditItemViewController: UIViewController {
     }
     
     @IBAction func cameraButtonTapped(_ sender: UIBarButtonItem) {
+        let cameraVC = storyboard?.instantiateViewController(withIdentifier: "cameraVC") as! CameraViewController
+        cameraVC.navigationItem.title = item.name
+        navigationController?.pushViewController(cameraVC, animated: true)
     }
     
+    @IBAction func trashButtonTapped(_ sender: UIBarButtonItem) {
+    }
     
 }
 

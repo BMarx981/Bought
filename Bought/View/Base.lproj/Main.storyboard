@@ -271,7 +271,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="G69-bT-fK1"/>
-                                    <barButtonItem systemItem="trash" id="uek-Xy-R7e"/>
+                                    <barButtonItem systemItem="trash" id="uek-Xy-R7e">
+                                        <connections>
+                                            <action selector="trashButtonTapped:" destination="4si-cD-IN5" id="A2X-HY-v1t"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -291,6 +295,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSq-KC-YYc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3847" y="577"/>
+        </scene>
+        <!--Camera -->
+        <scene sceneID="YY0-b1-M8R">
+            <objects>
+                <viewController storyboardIdentifier="cameraVC" title="Camera " id="fIo-tK-bPX" customClass="CameraViewController" customModule="Bought" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9aZ-gF-bLr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aE2-8s-0BY">
+                                <rect key="frame" x="16" y="65" width="343" height="582"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="582" id="s8s-F9-voz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="McB-nK-bZT" firstAttribute="bottom" secondItem="aE2-8s-0BY" secondAttribute="bottom" constant="20" id="CSd-AE-cZb"/>
+                            <constraint firstItem="aE2-8s-0BY" firstAttribute="leading" secondItem="McB-nK-bZT" secondAttribute="leading" constant="16" id="hrt-QF-RSl"/>
+                            <constraint firstItem="McB-nK-bZT" firstAttribute="trailing" secondItem="aE2-8s-0BY" secondAttribute="trailing" constant="16" id="pAM-fd-RTS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="McB-nK-bZT"/>
+                    </view>
+                    <connections>
+                        <outlet property="previewView" destination="aE2-8s-0BY" id="BGf-V4-CbA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rlg-cQ-nVu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4588" y="575.26236881559225"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wDo-3n-ZHd">
