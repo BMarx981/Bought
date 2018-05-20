@@ -14,14 +14,12 @@ class ListTableViewController: UITableViewController {
     var trip = TripModel()
     var delegate: EditItemDelegate?
     var addItemDelegate: AddItemDelegate?
+    let purple = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addItemDelegate = self
         delegate = self
-        let purple = UIColor(red: 0.73, green: 0.0, blue: 0.73, alpha: 1.0)
-        let textAttributes = [NSAttributedStringKey.foregroundColor:purple]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationItem.title = trip.name
         
     }
@@ -137,6 +135,7 @@ class ListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listCell", for: indexPath)
         let item = trip.aisles[indexPath.section].items[indexPath.row]
         cell.textLabel?.text = item.name
+        cell.textLabel?.textColor = UIColor(red: 0.3, green: 0.0, blue: 0.83, alpha: 1.0)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         cell.addGestureRecognizer(longPress)
         
@@ -276,8 +275,8 @@ class ListTableViewController: UITableViewController {
     
     func setCellToNormal(_ cell: UITableViewCell) {
         cell.accessoryType = .none
-        cell.textLabel?.textColor = .black
-        cell.detailTextLabel?.textColor = .black
+        cell.textLabel?.textColor = purple
+        cell.detailTextLabel?.textColor = purple
     }
     
     func setCellToChecked(_ cell: UITableViewCell) {

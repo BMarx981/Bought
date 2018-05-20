@@ -51,6 +51,8 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
+        cell.textLabel?.textColor = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
+        cell.detailTextLabel?.textColor = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
         cell.textLabel?.text = trip.aisles[indexPath.row].name
         cell.detailTextLabel?.text = "Total #: \(trip.aisles[indexPath.row].items.count)"
 

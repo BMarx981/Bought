@@ -12,33 +12,33 @@ import Firebase
 class TripTableViewController: UITableViewController {
     
     var trip = TripModel()
-    var trip2 = TripModel()
+//    var trip2 = TripModel()
     var trips = [TripModel]()
-    var sectionNames = [String]()
-    var fruit = ["grapes", "bananas"]
-    var veg = ["brocolli", "carrots", "asparagus"]
-    var carbs = ["bread", "cereal", "muffins"]
-    var dairy = ["milk", "orange juice", "eggs", "butter"]
-    var frozen = ["shrimp", "burritos", "pizza"]
+//    var sectionNames = [String]()
+//    var fruit = ["grapes", "bananas"]
+//    var veg = ["brocolli", "carrots", "asparagus"]
+//    var carbs = ["bread", "cereal", "muffins"]
+//    var dairy = ["milk", "orange juice", "eggs", "butter"]
+//    var frozen = ["shrimp", "burritos", "pizza"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let aisles = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
-        for key in aisles.keys {
-            sectionNames.append(key)
-        }
-
-        for aisleObj in 0..<aisles.count {
-            let aisle = Aisle(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
-            trip.aisles.append(aisle)
-            trip2.aisles.append(aisle)
-        }
-
-        trip.name = "Stop and Shop"
-        trip2.name = "Trader Joes"
-
-        trips.append(trip)
-        trips.append(trip2)
+//        let aisles = ["Fruit": fruit, "Veggies": veg, "Carbs": carbs, "Dairy": dairy, "Frozen": frozen]
+//        for key in aisles.keys {
+//            sectionNames.append(key)
+//        }
+//
+//        for aisleObj in 0..<aisles.count {
+//            let aisle = Aisle(name: sectionNames[aisleObj], list: trip.convertToItems(aisles[sectionNames[aisleObj]]!), expand: true)
+//            trip.aisles.append(aisle)
+//            trip2.aisles.append(aisle)
+//        }
+//
+//        trip.name = "Stop and Shop"
+//        trip2.name = "Trader Joes"
+//
+//        trips.append(trip)
+//        trips.append(trip2)
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,6 +81,7 @@ class TripTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tripCell", for: indexPath)
         let item = trips[indexPath.row].name
         cell.textLabel?.text = item
+        cell.textLabel?.textColor = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         cell.addGestureRecognizer(longPress)
         return cell
@@ -149,15 +150,4 @@ class TripTableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
