@@ -6,7 +6,7 @@
 //  Copyright © 2018 Marx, Brian. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class TripModel {
     var name = ""

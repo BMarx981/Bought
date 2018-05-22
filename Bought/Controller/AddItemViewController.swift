@@ -18,6 +18,7 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     var aisle = [Aisle]()
     var delegate: AddItemDelegate?
     var focusView = IndexPath()
+    var purple = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
     
     @IBOutlet weak var textfieledOutlet: UITextField!
     @IBOutlet weak var tableView: UITableView!
@@ -32,6 +33,9 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
         for ailse in trip.aisles {
             aisle.append(ailse)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AddItemViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddItemViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,8 +55,8 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
-        cell.textLabel?.textColor = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
-        cell.detailTextLabel?.textColor = UIColor(red: 0.83, green: 0.0, blue: 0.83, alpha: 1.0)
+        cell.textLabel?.textColor = purple
+        cell.detailTextLabel?.textColor = purple
         cell.textLabel?.text = trip.aisles[indexPath.row].name
         cell.detailTextLabel?.text = "Total #: \(trip.aisles[indexPath.row].items.count)"
 
@@ -74,13 +78,23 @@ class AddItemViewController: UIViewController, UITableViewDelegate, UITableViewD
         return true
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Keyboard Observers
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                let theView = view.viewWithTag(123) as! UITableView
+                theView.frame.size.height -= keyboardSize.height
+            }
+        }
     }
-    */
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                let theView = view.viewWithTag(123) as! UITableView
+                theView.frame.size.height += keyboardSize.height
+            }
+        }
+    }
+
 }
